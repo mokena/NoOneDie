@@ -22,6 +22,7 @@ bool Guy::init() {
 	setPhysicsBody(PhysicsBody::createBox(size));
 
 	getPhysicsBody()->setRotationEnable(false);
+	getPhysicsBody()->setContactTestBitmask(CONTACT_MASK);
 
 	return true;
 }

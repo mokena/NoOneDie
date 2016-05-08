@@ -13,6 +13,7 @@ bool Block::init() {
 	setPositionX(visibleSize.width);
 
 	getPhysicsBody()->setDynamic(false);
+	getPhysicsBody()->setContactTestBitmask(Block::CONTACT_MASK);
 
 	scheduleUpdate();
 

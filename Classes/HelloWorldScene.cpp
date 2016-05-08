@@ -1,8 +1,5 @@
 #include "HelloWorldScene.h"
 
-
-
-
 Scene* HelloWorld::createScene()
 {
     // 'scene' is an autorelease object
@@ -32,6 +29,17 @@ bool HelloWorld::init()
     
 	_gcs.pushBack(GameController::create(this, 30));
 
+	auto contactListener = EventListenerPhysicsContact::create();
+	contactListener->onContactBegin = [this](PhysicsContact &contact) {
+		switch(contact.getShapeA()->getContactTestBitmask() | contact.getShapeB()->getContactTestBitmask()) {
+		case Guy::CONTACT_MASK | Block::CONTACT_MASK:
+			this->unscheduleUpdate();
+			break;
+		}
+		return true;
+	};
+
+	Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(contactListener, this);
 	scheduleUpdate();
     
     return true;
