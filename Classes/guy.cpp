@@ -1,9 +1,12 @@
 #include "Guy.h"
 
+
 bool Guy::init() {
 	Sprite::init();
 
-	//initWithFile("guy02.png");
+	Size size = Size(44, 52);
+	setContentSize(size);
+	setPhysicsBody(PhysicsBody::createBox(size));
 
 	auto animation = Animation::create();
 	for (int i = 1; i<=5; i++)
@@ -13,15 +16,10 @@ bool Guy::init() {
 		animation->addSpriteFrameWithFile(szName);
 	}
 
-	animation->setDelayPerUnit(100.0f / 5.0f);
+	animation->setDelayPerUnit(0.5f / 5.0f);
 	animation->setRestoreOriginalFrame(true);
 	auto action = Animate::create(animation);
-	//this->runAction();
 	runAction(RepeatForever::create(action));
-
-	Size size = Size(44, 52);
-	setPhysicsBody(PhysicsBody::createBox(size));
-	setContentSize(size);
 
 	return true;
 }
