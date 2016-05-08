@@ -1,6 +1,7 @@
 #include "HelloWorldScene.h"
 #include "Edge.h"
 #include "Guy.h"
+#include "Block.h"
 
 USING_NS_CC;
 
@@ -41,6 +42,10 @@ bool HelloWorld::init()
 	auto guy = Guy::create();
 	addChild(guy);
 	guy->setPosition(100, 100);
+
+	auto block = Block::create();
+	addChild(block);
+	block->setPositionY(block->getContentSize().height / 2);
     
     return true;
 }
