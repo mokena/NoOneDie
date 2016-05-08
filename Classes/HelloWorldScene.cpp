@@ -1,15 +1,13 @@
 #include "HelloWorldScene.h"
-#include "Edge.h"
-#include "Guy.h"
-#include "Block.h"
 
-USING_NS_CC;
+
+
 
 Scene* HelloWorld::createScene()
 {
     // 'scene' is an autorelease object
     auto scene = Scene::createWithPhysics();
-	scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	//scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 	scene->getPhysicsWorld()->setGravity(Vec2(0, -1000));
     
     // 'layer' is an autorelease object
@@ -32,22 +30,17 @@ bool HelloWorld::init()
         return false;
     }
     
-    Size visibleSize = Director::getInstance()->getVisibleSize();
-    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+	_gcs.pushBack(GameController::create(this, 30));
 
-	auto edge = Edge::create();
-	addChild(edge);
-	edge->setPosition(visibleSize.width / 2, visibleSize.height / 2);
-
-	auto guy = Guy::create();
-	addChild(guy);
-	guy->setPosition(100, 100);
-
-	auto block = Block::create();
-	addChild(block);
-	block->setPositionY(block->getContentSize().height / 2);
+	scheduleUpdate();
     
     return true;
+}
+
+void HelloWorld::update(float dt) {
+	for (auto it = _gcs.begin(); it != _gcs.end(); it++) {
+		(*it)->onUpdate();
+	}
 }
 
 

@@ -12,7 +12,7 @@ bool Guy::init() {
 		animation->addSpriteFrameWithFile(szName);
 	}
 
-	animation->setDelayPerUnit(0.5f / 5.0f);
+	animation->setDelayPerUnit(0.25f / 5.0f);
 	animation->setRestoreOriginalFrame(true);
 	auto action = Animate::create(animation);
 	runAction(RepeatForever::create(action));
