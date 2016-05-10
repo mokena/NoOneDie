@@ -1,4 +1,5 @@
 #include "HelloWorldScene.h"
+#include "GameOverScene.h"
 
 Scene* HelloWorld::createScene()
 {
@@ -34,6 +35,7 @@ bool HelloWorld::init()
 		switch(contact.getShapeA()->getContactTestBitmask() | contact.getShapeB()->getContactTestBitmask()) {
 		case Guy::CONTACT_MASK | Block::CONTACT_MASK:
 			this->unscheduleUpdate();
+			Director::getInstance()->replaceScene(GameOver::createScene());
 			break;
 		}
 		return true;
