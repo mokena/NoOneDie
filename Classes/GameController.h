@@ -25,6 +25,8 @@ public:
 	void resetFrame();
 	void onUpdate();
 	void addBlock();
+	bool isTouched(Vec2 point);
+	void onTouched();
 };
 
 

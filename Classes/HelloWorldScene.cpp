@@ -6,7 +6,7 @@ Scene* HelloWorld::createScene()
     // 'scene' is an autorelease object
     auto scene = Scene::createWithPhysics();
 	//scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
-	scene->getPhysicsWorld()->setGravity(Vec2(0, -1000));
+	scene->getPhysicsWorld()->setGravity(Vec2(0, -2000));
     
     // 'layer' is an autorelease object
 	auto layer = HelloWorld::create();
@@ -28,7 +28,7 @@ bool HelloWorld::init()
         return false;
     }
     
-	_gcs.pushBack(GameController::create(this, 30));
+	_gcs.insert(0, GameController::create(this, 30));
 
 	auto contactListener = EventListenerPhysicsContact::create();
 	contactListener->onContactBegin = [this](PhysicsContact &contact) {
@@ -42,6 +42,18 @@ bool HelloWorld::init()
 	};
 
 	Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(contactListener, this);
+
+	auto touchListener = EventListenerTouchOneByOne::create();
+	touchListener->onTouchBegan = [this](Touch* t, Event* e) {
+		for (auto it = _gcs.begin(); it != _gcs.end(); it++) {
+			if ((*it)->isTouched(t->getLocation())) {
+				(*it)->onTouched();
+			}
+		}
+		return false;
+	};
+	Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(touchListener, this);
+
 	scheduleUpdate();
     
     return true;

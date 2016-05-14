@@ -17,17 +17,17 @@ bool GameController::init(Layer* layer, int positionY) {
 
 	_edge = Edge::create();
 	_layer->addChild(_edge);
-	_edge->setPosition(_visibleSize.width / 2, _visibleSize.height / 2 + positionY);
-
-	_guy = Guy::create();
-	_layer->addChild(_guy);
-	_guy->setPosition( _guy->getContentSize().width/2, _guy->getContentSize().height / 2 + positionY);
+	_edge->setPosition(0, positionY);
 
 	auto ground = Sprite::create();
 	ground->setColor(Color3B(0, 0, 0));
 	ground->setTextureRect(Rect(0, 0, _visibleSize.width, 3));
 	ground->setPosition(_visibleSize.width / 2, 1.5 + positionY);
 	_layer->addChild(ground);
+
+	_guy = Guy::create();
+	_layer->addChild(_guy);
+	_guy->setPosition( _guy->getContentSize().width/2, _guy->getContentSize().height / 2 + positionY);
 
 	return true;
 }
@@ -49,4 +49,17 @@ void GameController::onUpdate() {
 		resetFrame();
 		addBlock();
 	}
+}
+
+bool GameController::isTouched(Vec2 point) {
+	if (_edge->getBoundingBox().containsPoint(point)) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+void GameController::onTouched() {
+	_guy->getPhysicsBody()->setVelocity(Vec2(0, 600));
 }

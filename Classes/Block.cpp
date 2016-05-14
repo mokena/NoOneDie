@@ -21,7 +21,7 @@ bool Block::init() {
 }
 
 void Block::update(float dt) {
-	setPositionX(getPositionX() - 2);
+	setPositionX(getPositionX() - 3);
 
 	if (getPositionX() < 0) {
 		unscheduleUpdate();
